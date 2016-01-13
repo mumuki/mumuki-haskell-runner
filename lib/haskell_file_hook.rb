@@ -5,7 +5,7 @@ class HaskellFileHook < Mumukit::Templates::FileHook
     '.hs'
   end
 
-  def run_test_command(filename)
+  def command_line(filename)
     "#{runhaskell_command} #{filename}"
   end
 

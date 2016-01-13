@@ -1,43 +1,63 @@
 require_relative './spec_helper'
 
-
-class File
-  def unlink
-  end
-end
-
-
 describe TestHook do
-  let(:runner) { TestHook.new('runhaskell_command' => 'runhaskell') }
-  let(:file) { File.new('spec/data/sample.rb') }
-  let(:file_multi) { File.new('spec/data/sample_multi.rb') }
-  let(:file_failed) { File.new('spec/data/sample_failed.rb') }
-
-  describe '#run_test_command' do
-    it { expect(runner.run_test_command(file.path)).to include('rspec spec/data/sample.rb') }
-  end
+  let(:hook) { TestHook.new('runhaskell_command' => 'runhaskell') }
 
   describe '#run!' do
+    let(:file) { hook.compile(treq(content, test, extra)) }
+    let(:results) { hook.run!(file)[0] }
+
+    let(:extra) { '' }
+    let(:content) { '' }
+    let(:test) { '' }
+
     context 'on simple passed file' do
-      let(:results) { runner.run!(file) }
+      let(:content) { 'x = True' }
+      let(:test) do
+        <<HASKELL
+describe "x\" $ do
+  it \"should be True\" $ do
+      x `shouldBe` True"
+HASKELL
+      end
 
-      it { expect(results[0]).to eq([['_true is true', :passed, '']]) }
+      it { expect(results).to eq([['_true is true', :passed, '']]) }
     end
 
-    context 'on simple failed file' do
-      let(:results) { runner.run!(file_failed) }
-
-      it { expect(results[0]).to(
-          eq([['_true is is something that will fail', :failed, "\nexpected: 3\n     got: true\n\n(compared using ==)\n"]])) }
+    context 'on simple passed with warnings' do
+      let(:content) do
+        <<HASKELL
+x = True
+foo x = True
+foo _ = False
+HASKELL
+      end
+      let(:test) do
+        <<HASKELL
+describe "x\" $ do
+  it \"should be True\" $ do
+      x `shouldBe` True"
+HASKELL
+      end
+      it { expect(results).to eq([['_true is true', :passed, '']]) }
     end
 
-    context 'on multi file' do
-      let(:results) { runner.run!(file_multi) }
-
-      it { expect(results[0]).to(
-          eq([['_true is true', :passed, ''],
-              ['_true is not _false', :passed, ''],
-              ['_true is is something that will fail', :failed, "\nexpected: 3\n     got: true\n\n(compared using ==)\n"]])) }
+    context 'on simple passed with warnings' do
+      let(:content) do
+        <<HASKELL
+x = True
+foo x = True
+foo _ = False
+HASKELL
+      end
+      let(:test) do
+        <<HASKELL
+describe "x\" $ do
+  it \"should be True\" $ do
+      x `shouldBe` True"
+HASKELL
+      end
+      it { expect(results).to eq([['_true is true', :passed, '']]) }
     end
   end
 end

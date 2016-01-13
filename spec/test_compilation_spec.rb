@@ -1,3 +1,5 @@
+require_relative './spec_helper'
+
 describe TestHook do
   let(:hook) { TestHook.new(nil) }
 
@@ -17,15 +19,17 @@ import Test.Hspec.Formatters.Structured
 import Test.Hspec.Runner (hspecWith, defaultConfig, Config (configFormatter))
 import Test.QuickCheck
 import qualified Control.Exception as Exception
-x = Truen
+x = True
+
 main :: IO ()
 main = hspecWith defaultConfig {configFormatter = Just structured} $ do
-describe "x" $ do
+ describe "x" $ do
   it "should be True" $ do
     x `shouldBe` True"
+
 HASKELL
   }
 
-  it { expect(hook.compile(treq(sample_content, sample_test, '')).to eq expected_compilation) }
+  it { expect(hook.compile_file_content(treq(sample_content, sample_test, ''))).to eq expected_compilation }
 end
 
