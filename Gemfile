@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rake'
-gem 'mumukit', github: 'mumuki/mumukit', branch: 'feature-generalized-hooks'
+gem 'mumukit', github: 'mumuki/mumukit', tag: 'v1.0.0'
 gem 'mumukit-inspection', github: 'mumuki/mumukit-inspection', branch: 'master'
 gem 'rspec', '2.13'
 
