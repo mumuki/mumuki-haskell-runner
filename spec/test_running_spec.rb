@@ -140,7 +140,7 @@ describe "x" $ do
       x `shouldBe` True
 HASKELL
       end
-      it { expect(raw_results).to eq(['Not in scope: `x\'', :errored]) }
+      it { expect(raw_results).to include(['Not in scope: ‘x’', :errored]) }
     end
   end
 end
