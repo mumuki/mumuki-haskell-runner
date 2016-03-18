@@ -51,6 +51,7 @@ GEM
     mime-types (2.99)
     minitest (5.8.4)
     netrc (0.11.0)
+    puma (2.13.4)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -90,8 +91,9 @@ DEPENDENCIES
   mumukit!
   mumukit-bridge!
   mumukit-inspection!
+  puma
   rake
   rspec (= 2.13)
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
