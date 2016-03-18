@@ -1,4 +1,4 @@
-#\ -s puma -t 16:16
+#\ -s puma
 
 require_relative './lib/hspec_server2'
 
