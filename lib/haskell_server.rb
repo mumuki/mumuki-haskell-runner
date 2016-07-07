@@ -1,8 +1,8 @@
 require 'mumukit'
 
+Mumukit.runner_name = 'haskell'
 Mumukit.configure do |config|
   config.docker_image = 'mumuki/mumuki-hspec-worker'
-  config.runner_name = 'hspec-server2'
 end
 
 require_relative './haskell_file_hook'

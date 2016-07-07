@@ -1,4 +1,4 @@
-require_relative '../spec/spec_helper' #FIXME remove. There must be an issue with mumukit-bridge requires
+require 'active_support/all'
 
 require 'mumukit/bridge'
 

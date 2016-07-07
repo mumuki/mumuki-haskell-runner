@@ -1,4 +1,4 @@
-class ValidationHook < Mumukit::Hook
+class HaskellValidationHook < Mumukit::Hook
   def validate!(request)
     raise Mumukit::RequestValidationError, 'you can not use unsafe io' if unsafe?(request)
   end

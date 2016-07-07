@@ -1,4 +1,4 @@
-class QueryHook < HaskellFileHook
+class HaskellQueryHook < HaskellFileHook
   def compile_file_content(req)
     <<EOF
 import Text.Show.Functions

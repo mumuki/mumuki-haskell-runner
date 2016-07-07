@@ -1,5 +1,3 @@
-#\ -s puma
-
-require_relative './lib/hspec_server2'
+require_relative './lib/haskell_server'
 
 run Mumukit::Server::App

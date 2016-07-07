@@ -6,7 +6,7 @@ class HaskellFileHook < Mumukit::Templates::FileHook
   end
 
   def command_line(filename)
-    "#{runhaskell_command} #{filename}"
+    "runhaskell #{filename}"
   end
 
 end

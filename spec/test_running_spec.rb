@@ -1,7 +1,7 @@
 require_relative './spec_helper'
 
-describe TestHook do
-  let(:hook) { TestHook.new('runhaskell_command' => 'runhaskell') }
+describe HaskellTestHook do
+  let(:hook) { HaskellTestHook.new }
 
   describe '#run!' do
     let(:file) { hook.compile(treq(content, test, extra)) }

@@ -1,4 +1,4 @@
-class TestHook < HaskellFileHook
+class HaskellTestHook < HaskellFileHook
   structured true
 
   def to_structured_result(result)

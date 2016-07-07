@@ -1,7 +1,7 @@
 require_relative './spec_helper'
 
-describe ValidationHook do
-  let(:hook) { ValidationHook.new(nil) }
+describe HaskellValidationHook do
+  let(:hook) { HaskellValidationHook.new(nil) }
   it 'should admit non malicious code' do
     expect(hook.unsafe? treq('x = 4')).to be false
   end

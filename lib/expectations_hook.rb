@@ -20,7 +20,7 @@ class Mumukit::Inspection::NegatedInspection
   end
 end
 
-class ExpectationsRunner < Mumukit::Hook
+class HaskellExpectationsRunner < Mumukit::Hook
   include Mumukit
 
   def run_expectations!(request)
@@ -30,7 +30,7 @@ class ExpectationsRunner < Mumukit::Hook
     file.write(request.content)
     file.close
 
-    command = "echo \"'#{file.path}'. #{terms}.\" |  #{swipl_path} -q -t main -f expectations/main.pl"
+    command = "echo \"'#{file.path}'. #{terms}.\" |  swipl -q -t main -f expectations/main.pl"
     JSON.parse(%x{#{command}})['expectationResults']
   end
 

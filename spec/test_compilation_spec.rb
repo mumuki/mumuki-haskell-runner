@@ -1,7 +1,7 @@
 require_relative './spec_helper'
 
-describe TestHook do
-  let(:hook) { TestHook.new(nil) }
+describe HaskellTestHook do
+  let(:hook) { HaskellTestHook.new(nil) }
   let(:compilation) { hook.compile_file_content(treq(sample_content, sample_test, '')) }
 
   let(:sample_content) { 'x = True' }

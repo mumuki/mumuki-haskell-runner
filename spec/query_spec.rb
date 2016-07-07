@@ -1,7 +1,7 @@
 require_relative './spec_helper'
 
-describe QueryHook do
-  let(:hook) { QueryHook.new(runhaskell_command: 'runhaskell') }
+describe HaskellQueryHook do
+  let(:hook) { HaskellQueryHook.new }
   let(:file) { hook.compile(request) }
   let(:result) { hook.run!(file) }
 
