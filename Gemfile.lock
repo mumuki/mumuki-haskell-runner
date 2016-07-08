@@ -27,8 +27,8 @@ GIT
 
 GIT
   remote: git://github.com/mumuki/mumukit.git
-  revision: ce1d38c4dd7d45641c19e827bd48a0667c50b8a1
-  branch: v2.1.0
+  revision: 2040bfc2b58a196396de76022390af4536a7d5d0
+  branch: master
   specs:
     mumukit (2.1.0)
       activesupport
@@ -80,7 +80,7 @@ GEM
       redcarpet (>= 2.0)
     mime-types (2.99)
     mini_portile2 (2.1.0)
-    minitest (5.8.4)
+    minitest (5.9.0)
     netrc (0.11.0)
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)

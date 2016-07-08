@@ -13,7 +13,7 @@ describe HaskellExpectationsHook do
   let(:result) { compile_and_run(req(expectations, code)) }
 
   context 'smells' do
-    let(:code) { 'foo = \x -> f x' }
+    let(:code) { 'foo\' = \x -> f x' }
     let(:expectations) do
       [{binding: 'foo', inspection: 'HasBinding'}]
     end
