@@ -3,7 +3,7 @@ require 'active_support/all'
 require 'mumukit/bridge'
 
 describe 'runner' do
-  let(:bridge) { Mumukit::Bridge::Bridge.new('http://localhost:4567') }
+  let(:bridge) { Mumukit::Bridge::Runner.new('http://localhost:4567') }
   before(:all) do
     @pid = Process.spawn 'rackup -p 4567', err: '/dev/null'
     sleep 3
@@ -35,6 +35,13 @@ import System.IO.Unsafe
 
 x = 1
 HASKELL
+  end
+
+  it 'answers a valid hash when query is ok' do
+    response = bridge.run_query!(extra: "f x = x",
+                                 content: "g x = x",
+                                 query: 'f 1 + g 2')
+    expect(response).to eq(status: :passed, result: "3\n")
   end
 
   it 'answers a valid hash when submission is ok' do

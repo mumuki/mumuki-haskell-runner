@@ -4,6 +4,11 @@ class HaskellValidationHook < Mumukit::Hook
   end
 
   def unsafe?(request)
-    [request.content, request.test, request.extra].any? { |it| it.include? 'System.IO.Unsafe' }
+    [
+        request.content,
+        request.test,
+        request.extra,
+        request.query
+    ].compact.any? { |it| it.include? 'System.IO.Unsafe' }
   end
 end
