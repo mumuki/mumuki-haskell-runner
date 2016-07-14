@@ -35,7 +35,7 @@ structured = silent {
 #{req.extra}
 main :: IO ()
 main = hspecWith defaultConfig {configFormatter = Just structured} $ do
- #{req.test}
+#{req.test.lines.map {|it| '    ' + it}.join}
 EOF
   end
 end

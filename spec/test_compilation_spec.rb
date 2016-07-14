@@ -10,6 +10,9 @@ describe HaskellTestHook do
 describe "x" $ do
   it "should be True" $ do
     x `shouldBe` True
+describe y" $ do
+  it "should be False" $ do
+    x `shouldBe` False
 HASKELL
   }
   let(:expected_compilation_imports) do
@@ -31,9 +34,12 @@ x = True
 
 main :: IO ()
 main = hspecWith defaultConfig {configFormatter = Just structured} $ do
- describe "x" $ do
-  it "should be True" $ do
-    x `shouldBe` True
+    describe "x" $ do
+      it "should be True" $ do
+        x `shouldBe` True
+    describe y" $ do
+      it "should be False" $ do
+        x `shouldBe` False
 HASKELL
   end
 
