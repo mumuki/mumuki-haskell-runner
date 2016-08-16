@@ -3,6 +3,7 @@ require 'mumukit'
 Mumukit.runner_name = 'haskell'
 Mumukit.configure do |config|
   config.docker_image = 'mumuki/mumuki-hspec-worker'
+  config.comment_type = Mumukit::Directives::CommentType::Haskell
 end
 
 require_relative './haskell_file_hook'
