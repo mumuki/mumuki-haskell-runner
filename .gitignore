@@ -1,1 +1,6 @@
+version
+bin/mulang
+
+spec/coverage/**
+
 .idea/**
