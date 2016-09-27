@@ -4,3 +4,4 @@ bin/mulang
 spec/coverage/**
 
 .idea/**
+Gemfile.lock
