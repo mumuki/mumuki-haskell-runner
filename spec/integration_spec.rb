@@ -72,6 +72,22 @@ HASKELL
                            result: '')
   end
 
+
+  it 'answers a valid hash when submission is not ok and ends in comment' do
+    response = bridge.run_tests!(test: test,
+                                 extra: '',
+                                 content: "#{nok_content}\n-- dsds",
+                                 expectations: [])
+
+    expect(response).to eq(response_type: :structured,
+                           test_results: [{title: 'x', status: :failed, result: "expected: 1\n but got: 2"}],
+                           status: :failed,
+                           feedback: '',
+                           expectation_results: [],
+                           result: '')
+  end
+
+
   it 'answers a valid hash when submission is invalid' do
     response = bridge.run_tests!(test: test,
                                  extra: '',
