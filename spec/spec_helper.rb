@@ -1,7 +1,7 @@
 require 'rspec'
 require 'ostruct'
 
-require_relative '../lib/haskell_server'
+require_relative '../lib/haskell_runner'
 
 def treq(content='', test='', extra='')
   OpenStruct.new(content: content, test: test, extra: extra)
