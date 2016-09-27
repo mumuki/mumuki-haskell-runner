@@ -1,0 +1,6 @@
+{
+  "content": "foo x = x + 1\nfoo _ = 0",
+  "test": "describe \"foo\" $ do\n  it \"e1\" $ do\n    (foo 1) `shouldBe` 2\n\n  it \"e2\" $ do\n    (foo 2) `shouldBe` 2\n",
+  "extra":"",
+  "expectations":[]
+}

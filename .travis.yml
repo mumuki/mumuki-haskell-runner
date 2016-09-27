@@ -10,3 +10,11 @@ before_install:
 - wget https://github.com/mumuki/mulang/releases/download/v0.2.8/mulang
 - mv mulang bin/
 - chmod +x bin/mulang
+deploy:
+  provider: rubygems
+  api_key:
+    secure: n3iIio+itBH/+joner5392QeLK7eBeSpb+BvZ/dUeHgXYmt2t8jSmmz7K3U9TpmICciHMaphYdxsZV2cUQZVBYqaZJ4zbhabwqBhsytkR5grkj6vAPZjqkQigrh7up0hpSbgcZ+zGAgbsT0eWEX6SA6a878fwJ2NJ78xn+1Fl30snX/grabFxoU2FKWeYtVyM7RSdfLe0Q5o0J6ju+8muxMbDFbPZa4JPtv2GkaNgrY7lCInaikwZRIK3piSzB34wpXj9e0JhKjE1mbZTM1XYXLLiZVKcUEaRGa8lBCs0wo11RIAdEste7oKH+5tmvFhUctQ8D96tz5KAbr2qE5n4751fZEAc7hc33aLmJ0TgmywOMbBooZc6NppHFUmwkhQMCqNisSt+qWo6q0yFAJA1yU0W6kf7Md6UsWjdOkIxu5UfZXVjd5qRFulo4EpCryxs8YhL/jjtjcbVBB5vBr4MEDSLlKrwKrsd7Vm3iiuCSb4v4ME4Z23K2J6qg5BISgiV7u+GvkNZlL/rxUAMN0Aw/x016O+Lon3WTTivEN8JErJyoQZQzMd9XEjYtXeBu8pczPLkNT7PweuQpXMKEzk/Pt6U+o4rLaiqQKsK1GCKdNwMP8UzgvcxP73nH7pPX+bie+ZXaxVQngoWhYbngjbA1p91RqypSFxVyiHA1uSsKk=
+  gem: mumuki-haskell-runner
+  on:
+    tags: true
+    repo: mumuki/mumuki-haskell-runner
