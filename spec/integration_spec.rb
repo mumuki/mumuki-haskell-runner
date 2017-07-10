@@ -44,6 +44,8 @@ HASKELL
     expect(response).to eq(status: :passed, result: "3\n")
   end
 
+
+
   it 'answers a valid hash when submission is ok' do
     response = bridge.run_tests!(test: test,
                                  extra: '',
@@ -72,6 +74,23 @@ HASKELL
                            result: '')
   end
 
+
+  it 'answers a valid hash when submission has a type error' do
+    response = bridge.run_tests!(test: test,
+                                 extra: '',
+                                 content: "x :: String\nx = True",
+                                 expectations: [])
+
+    expect(response.slice(:response_type, :feedback)).to eq feedback: '', response_type: :structured
+    expect(response[:test_results].length).to eq 1
+    expect(response[:test_results].first[:result]).to start_with "
+Revisá ésta parte: x = True.
+Tenés un error de tipos en la expresión True: su tipo es Bool, pero ahí debería ir un String.
+
+Error detallado:
+
+Couldn't match type"
+  end
 
   it 'answers a valid hash when submission is not ok and ends in comment' do
     response = bridge.run_tests!(test: test,
