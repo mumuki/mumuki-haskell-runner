@@ -18,7 +18,11 @@ describe HaskellExpectationsHook do
       [{binding: 'foo', inspection: 'HasBinding'}]
     end
 
-    it { expect(result).to eq([{expectation: expectations[0], result: true}]) }
+    it { expect(result).to eq [
+         {expectation: {inspection: 'Declares:=foo', binding: ''}, result: false},
+         {expectation: {inspection: 'HasRedundantParameter', binding: "f'"}, result: false},
+         {expectation: {inspection: 'HasTooShortBindings', binding: "f'"}, result: false},
+         {expectation: {inspection: 'HasWrongCaseBindings', binding: "f'"}, result: false}] }
   end
 
   context 'v0 expectations' do
@@ -27,7 +31,7 @@ describe HaskellExpectationsHook do
       [{binding: 'foo', inspection: 'HasBinding'}]
     end
 
-    it { expect(result).to eq([{expectation: {inspection: "Declares:=foo", binding: ""}, result: true}]) }
+    it { expect(result).to eq([{expectation: {inspection: "Declares:=foo", binding: ''}, result: true}]) }
   end
 
   context 'v2 expectations' do
@@ -47,7 +51,8 @@ describe HaskellExpectationsHook do
       [{binding: 'foo', inspection: 'Not:HasBinding'}, {binding: 'foo', inspection: 'HasUsage:bar'}]
     end
 
-    it { expect(result).to eq([{expectation: expectations[0], result: true},
-                               {expectation: expectations[1], result: false}]) }
+    it { expect(result).to eq([{expectation: {binding: '', inspection: 'Not:Declares:=foo'}, result: true},
+                               {expectation: {binding: 'foo', inspection: 'Uses:=bar' }, result: false}]) }
   end
 end
+

@@ -68,7 +68,7 @@ HASKELL
                            test_results: [{title: 'x', status: :passed, result: ''}],
                            status: :passed_with_warnings,
                            feedback: '',
-                           expectation_results: [],
+                           expectation_results: [{binding: 'x', inspection: 'HasTooShortBindings', result: :failed}],
                            result: '')
   end
 
