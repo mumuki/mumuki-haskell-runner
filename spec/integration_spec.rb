@@ -48,7 +48,7 @@ HASKELL
     response = bridge.run_tests!(test: test,
                                  extra: '',
                                  content: ok_content,
-                                 expectations: [binding: '', inspection: 'Except:HasTooShortBindings'])
+                                 expectations: [{binding: '', inspection: 'Except:HasTooShortBindings'}])
 
     expect(response).to eq(response_type: :structured,
                            test_results: [{title: 'x', status: :passed, result: ''}],
@@ -76,13 +76,13 @@ HASKELL
     response = bridge.run_tests!(test: test,
                                  extra: '',
                                  content: nok_content,
-                                 expectations: [{binding: '', inspection: 'Except:HasTooShortBindings'}])
+                                 expectations: [])
 
     expect(response).to eq(response_type: :structured,
                            test_results: [{title: 'x', status: :failed, result: "expected: 1\n but got: 2"}],
                            status: :failed,
                            feedback: '',
-                           expectation_results: [],
+                           expectation_results: [{binding: 'x', inspection: 'HasTooShortBindings', result: :failed}],
                            result: '')
   end
 

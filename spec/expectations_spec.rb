@@ -34,15 +34,51 @@ describe HaskellExpectationsHook do
     it { expect(result).to eq([{expectation: {inspection: "Declares:=foo", binding: ''}, result: true}]) }
   end
 
-  context 'v2 expectations' do
-    let(:code) { 'foo = m 3' }
+  describe 'can declare exceptions' do
+    let(:code) { 'f = 1' }
     let(:expectations) do
-      [{binding: 'foo', inspection: 'Uses:m'},
-       {binding: '',    inspection: 'DeclaresFunction:foo'}]
+      [{binding: '', inspection: 'Except:HasTooShortBindings'}]
     end
 
-    it { expect(result).to eq([{expectation: expectations[0], result: true},
-                               {expectation: expectations[1], result: true}]) }
+    it { expect(result).to eq([]) }
+  end
+
+  context 'v2 expectations' do
+    let(:code) { 'foo = m 3' }
+
+    describe 'Uses' do
+      let(:expectations) do
+        [{binding: 'foo', inspection: 'Uses:m'},
+         {binding: 'foo', inspection: 'Uses:g'}]
+      end
+
+      it { expect(result).to eq([
+            {expectation: expectations[0], result: true},
+            {expectation: expectations[1], result: false}]) }
+    end
+
+    describe 'DeclaresVariable' do
+      let(:expectations) do
+        [{binding: '',    inspection: 'DeclaresVariable:foo'},
+         {binding: '',    inspection: 'DeclaresVariable:bar'},]
+      end
+
+      it { expect(result).to eq([
+            {expectation: expectations[0], result: true},
+            {expectation: expectations[1], result: false}]) }
+    end
+
+    describe 'Declares' do
+      let(:expectations) do
+        [{binding: '',    inspection: 'Declares:foo'},
+         {binding: '',    inspection: 'Declares:bar'},]
+      end
+
+      it { expect(result).to eq([
+            {expectation: expectations[0], result: true},
+            {expectation: expectations[1], result: false}]) }
+    end
+
   end
 
   context 'multiple v0 expectations' do
