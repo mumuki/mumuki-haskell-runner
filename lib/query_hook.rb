@@ -5,7 +5,7 @@ import Text.Show.Functions
 #{req.content}
 #{req.extra}
 main :: IO ()
-main = putStr.show $ #{req.query}
+main = putStrLn.show $ #{req.query}
 EOF
   end
 end
