@@ -1,10 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'mumuki-haskell-runner'
-  spec.version       = '1.0.1'
+  spec.version       = HaskellVersionHook::VERSION
   spec.authors       = ['Franco Leonardo Bulgarelli']
   spec.email         = ['franco@mumuki.org']
   spec.summary       = 'Haskell Runner for Mumuki'
