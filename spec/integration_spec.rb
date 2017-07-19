@@ -48,13 +48,27 @@ HASKELL
     response = bridge.run_tests!(test: test,
                                  extra: '',
                                  content: ok_content,
-                                 expectations: [])
+                                 expectations: [{binding: '', inspection: 'Except:HasTooShortBindings'}])
 
     expect(response).to eq(response_type: :structured,
                            test_results: [{title: 'x', status: :passed, result: ''}],
                            status: :passed,
                            feedback: '',
                            expectation_results: [],
+                           result: '')
+  end
+
+  it 'answers a valid hash when submission has warnigns' do
+    response = bridge.run_tests!(test: test,
+                                 extra: '',
+                                 content: ok_content,
+                                 expectations: [])
+
+    expect(response).to eq(response_type: :structured,
+                           test_results: [{title: 'x', status: :passed, result: ''}],
+                           status: :passed_with_warnings,
+                           feedback: '',
+                           expectation_results: [{binding: 'x', inspection: 'HasTooShortBindings', result: :failed}],
                            result: '')
   end
 
@@ -68,7 +82,7 @@ HASKELL
                            test_results: [{title: 'x', status: :failed, result: "expected: 1\n but got: 2"}],
                            status: :failed,
                            feedback: '',
-                           expectation_results: [],
+                           expectation_results: [{binding: 'x', inspection: 'HasTooShortBindings', result: :failed}],
                            result: '')
   end
 
@@ -83,7 +97,7 @@ HASKELL
                            test_results: [{title: 'x', status: :failed, result: "expected: 1\n but got: 2"}],
                            status: :failed,
                            feedback: '',
-                           expectation_results: [],
+                           expectation_results: [{binding: 'x', inspection: 'HasTooShortBindings', result: :failed}],
                            result: '')
   end
 

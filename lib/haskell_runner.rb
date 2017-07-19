@@ -6,6 +6,7 @@ Mumukit.configure do |config|
   config.comment_type = Mumukit::Directives::CommentType::Haskell
 end
 
+require_relative './version'
 require_relative './haskell_file_hook'
 require_relative './expectations_hook'
 require_relative './validation_hook'

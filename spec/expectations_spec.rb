@@ -13,30 +13,82 @@ describe HaskellExpectationsHook do
   let(:result) { compile_and_run(req(expectations, code)) }
 
   context 'smells' do
-    let(:code) { 'foo\' = \x -> f x' }
+    let(:code) { 'f\' = \x -> f x' }
     let(:expectations) do
       [{binding: 'foo', inspection: 'HasBinding'}]
     end
 
-    it { expect(result).to_not eq([{expectation: expectations[0], result: true}]) }
+    it { expect(result).to eq [
+         {expectation: {inspection: 'Declares:=foo', binding: ''}, result: false},
+         {expectation: {inspection: 'HasRedundantParameter', binding: "f'"}, result: false},
+         {expectation: {inspection: 'HasTooShortBindings', binding: "f'"}, result: false},
+         {expectation: {inspection: 'HasWrongCaseBindings', binding: "f'"}, result: false}] }
   end
 
-  context 'basic expectations' do
+  context 'v0 expectations' do
     let(:code) { 'foo = 1' }
     let(:expectations) do
       [{binding: 'foo', inspection: 'HasBinding'}]
     end
 
-    it { expect(result).to eq([{expectation: expectations[0], result: true}]) }
+    it { expect(result).to eq([{expectation: {inspection: "Declares:=foo", binding: ''}, result: true}]) }
   end
 
-  context 'multiple basic expectations' do
+  describe 'can declare exceptions' do
+    let(:code) { 'f = 1' }
+    let(:expectations) do
+      [{binding: '', inspection: 'Except:HasTooShortBindings'}]
+    end
+
+    it { expect(result).to eq([]) }
+  end
+
+  context 'v2 expectations' do
+    let(:code) { 'foo = m 3' }
+
+    describe 'Uses' do
+      let(:expectations) do
+        [{binding: 'foo', inspection: 'Uses:m'},
+         {binding: 'foo', inspection: 'Uses:g'}]
+      end
+
+      it { expect(result).to eq([
+            {expectation: expectations[0], result: true},
+            {expectation: expectations[1], result: false}]) }
+    end
+
+    describe 'DeclaresVariable' do
+      let(:expectations) do
+        [{binding: '',    inspection: 'DeclaresVariable:foo'},
+         {binding: '',    inspection: 'DeclaresVariable:bar'},]
+      end
+
+      it { expect(result).to eq([
+            {expectation: expectations[0], result: true},
+            {expectation: expectations[1], result: false}]) }
+    end
+
+    describe 'Declares' do
+      let(:expectations) do
+        [{binding: '',    inspection: 'Declares:foo'},
+         {binding: '',    inspection: 'Declares:bar'},]
+      end
+
+      it { expect(result).to eq([
+            {expectation: expectations[0], result: true},
+            {expectation: expectations[1], result: false}]) }
+    end
+
+  end
+
+  context 'multiple v0 expectations' do
     let(:code) { 'bar = 1' }
     let(:expectations) do
       [{binding: 'foo', inspection: 'Not:HasBinding'}, {binding: 'foo', inspection: 'HasUsage:bar'}]
     end
 
-    it { expect(result).to eq([{expectation: expectations[0], result: true},
-                               {expectation: expectations[1], result: false}]) }
+    it { expect(result).to eq([{expectation: {binding: '', inspection: 'Not:Declares:=foo'}, result: true},
+                               {expectation: {binding: 'foo', inspection: 'Uses:=bar' }, result: false}]) }
   end
 end
+
