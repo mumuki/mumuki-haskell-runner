@@ -19,7 +19,7 @@ describe HaskellExpectationsHook do
     end
 
     it { expect(result).to eq [
-         {expectation: {inspection: 'Declares:=foo', binding: ''}, result: false},
+         {expectation: {inspection: 'Declares:=foo', binding: '*'}, result: false},
          {expectation: {inspection: 'HasRedundantParameter', binding: "f'"}, result: false},
          {expectation: {inspection: 'HasTooShortBindings', binding: "f'"}, result: false},
          {expectation: {inspection: 'HasWrongCaseBindings', binding: "f'"}, result: false}] }
@@ -31,13 +31,13 @@ describe HaskellExpectationsHook do
       [{binding: 'foo', inspection: 'HasBinding'}]
     end
 
-    it { expect(result).to eq([{expectation: {inspection: "Declares:=foo", binding: ''}, result: true}]) }
+    it { expect(result).to eq([{expectation: {inspection: "Declares:=foo", binding: '*'}, result: true}]) }
   end
 
   describe 'can declare exceptions' do
     let(:code) { 'f = 1' }
     let(:expectations) do
-      [{binding: '', inspection: 'Except:HasTooShortBindings'}]
+      [{binding: '*', inspection: 'Except:HasTooShortBindings'}]
     end
 
     it { expect(result).to eq([]) }
@@ -59,8 +59,8 @@ describe HaskellExpectationsHook do
 
     describe 'DeclaresVariable' do
       let(:expectations) do
-        [{binding: '',    inspection: 'DeclaresVariable:foo'},
-         {binding: '',    inspection: 'DeclaresVariable:bar'},]
+        [{binding: '*',    inspection: 'DeclaresVariable:foo'},
+         {binding: '*',    inspection: 'DeclaresVariable:bar'},]
       end
 
       it { expect(result).to eq([
@@ -70,8 +70,8 @@ describe HaskellExpectationsHook do
 
     describe 'Declares' do
       let(:expectations) do
-        [{binding: '',    inspection: 'Declares:foo'},
-         {binding: '',    inspection: 'Declares:bar'},]
+        [{binding: '*',    inspection: 'Declares:foo'},
+         {binding: '*',    inspection: 'Declares:bar'},]
       end
 
       it { expect(result).to eq([
@@ -87,7 +87,7 @@ describe HaskellExpectationsHook do
       [{binding: 'foo', inspection: 'Not:HasBinding'}, {binding: 'foo', inspection: 'HasUsage:bar'}]
     end
 
-    it { expect(result).to eq([{expectation: {binding: '', inspection: 'Not:Declares:=foo'}, result: true},
+    it { expect(result).to eq([{expectation: {binding: '*', inspection: 'Not:Declares:=foo'}, result: true},
                                {expectation: {binding: 'foo', inspection: 'Uses:=bar' }, result: false}]) }
   end
 end
