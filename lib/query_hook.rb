@@ -1,6 +1,7 @@
 class HaskellQueryHook < HaskellFileHook
   def compile_file_content(req)
     <<EOF
+{-# OPTIONS_GHC -fdefer-type-errors #-}
 import Text.Show.Functions
 #{req.content}
 #{req.extra}
