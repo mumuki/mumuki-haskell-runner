@@ -10,7 +10,13 @@ class HaskellMetadataHook < Mumukit::Hook
      test_framework: {
          name: 'hspec',
          version: '2',
-         test_extension: 'hs'
+         test_extension: 'hs',
+         template: <<haskell
+describe "{{ test_template_group_description }}" $ do 
+  
+  it "{{ test_template_sample_description }}" $ do
+    True `shouldBe` True
+haskell
      }}
   end
 end
