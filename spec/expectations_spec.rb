@@ -9,7 +9,7 @@ describe HaskellExpectationsHook do
     runner.run!(runner.compile(request))
   end
 
-  let(:runner) { HaskellExpectationsHook.new(mulang_path: './bin/mulang') }
+  let(:runner) { HaskellExpectationsHook.new }
   let(:result) { compile_and_run(req(expectations, code)) }
 
   context 'smells' do
@@ -21,8 +21,8 @@ describe HaskellExpectationsHook do
     it { expect(result).to eq [
          {expectation: {inspection: 'Declares:=foo', binding: '*'}, result: false},
          {expectation: {inspection: 'HasRedundantParameter', binding: "f'"}, result: false},
-         {expectation: {inspection: 'HasTooShortBindings', binding: "f'"}, result: false},
-         {expectation: {inspection: 'HasWrongCaseBindings', binding: "f'"}, result: false}] }
+         {expectation: {inspection: 'HasTooShortIdentifiers', binding: "f'"}, result: false},
+         {expectation: {inspection: 'HasWrongCaseIdentifiers', binding: "f'"}, result: false}] }
   end
 
   context 'v0 expectations' do
@@ -37,7 +37,7 @@ describe HaskellExpectationsHook do
   describe 'can declare exceptions' do
     let(:code) { 'f = 1' }
     let(:expectations) do
-      [{binding: '*', inspection: 'Except:HasTooShortBindings'}]
+      [{binding: '*', inspection: 'Except:HasTooShortIdentifiers'}]
     end
 
     it { expect(result).to eq([]) }
