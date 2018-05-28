@@ -17,6 +17,12 @@ describe HaskellQueryHook do
     let(:request) { qreq(okCode, okQuery) }
       it { expect(result).to eq ["6\n", :passed] }
   end
+
+  describe 'should pass on a query that uses functions from Data.List' do
+    let(:request) { qreq(okCode, "nub [1, 1, 2]") }
+    it { expect(result).to eq ["[1,2]\n", :passed] }
+  end
+
   describe 'should have result on ok request with query dependent on extra' do
     let(:request) { qreq(okCodeOnExtra, okQuery, extraCode) }
     it { expect(result).to eq ["4\n", :passed] }

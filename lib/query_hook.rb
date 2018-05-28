@@ -3,6 +3,7 @@ class HaskellQueryHook < HaskellFileHook
     <<EOF
 {-# OPTIONS_GHC -fdefer-type-errors #-}
 import Text.Show.Functions
+import Data.List
 #{req.content}
 #{req.extra}
 main :: IO ()
