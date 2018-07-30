@@ -17,6 +17,17 @@ it "x" $ do
 HASKELL
   end
 
+  let(:unicode_string) do
+    "¿No gusta pasar a tomar una tacita de ☕? ¿No será mucha molestia?"
+  end
+
+  let(:test_unicode) do
+    <<HASKELL
+it "#{unicode_string}" $ do
+  x `shouldBe` 1
+HASKELL
+  end
+
   let(:ok_content) do
     <<HASKELL
 x = 1
@@ -116,4 +127,22 @@ HASKELL
                            result: 'you can not use unsafe io')
   end
 
+  describe 'Unicode characters support' do
+    it 'works OK with queries' do
+      response = bridge.run_query!(extra: "",
+                                   content: "",
+                                   query: "\"#{unicode_string}\"")
+
+      expect(response).to eq(status: :passed, result: "\"#{unicode_string}\"\n")
+    end
+
+    it 'works OK with submissions' do
+      response = bridge.run_tests!(test: test_unicode,
+                                   extra: '',
+                                   content: ok_content,
+                                   expectations: [])
+
+      expect(response[:test_results].first[:title]).to eq unicode_string
+    end
+  end
 end
