@@ -31,5 +31,10 @@ describe HaskellQueryHook do
     let(:request) { qreq(okCode, okShowFunction) }
     it { expect(result).to eq ["<function>\n", :passed] }
   end
+
+  describe 'should allow consulting a type' do
+    let(:request) { qreq('', ':t length') }
+    it { expect(result).to eq ["Foldable t => t a -> Int\n", :passed] }
+  end
 end
 
