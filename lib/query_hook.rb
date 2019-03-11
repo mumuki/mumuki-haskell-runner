@@ -15,6 +15,15 @@ EOF
 
   def post_process_file(_file, result, status)
     result = result.split("\n")[3..-2].join("\n")
-    [result, status]
+
+    if passed_query_regex =~ result
+      [$1, status]
+    else
+      [result, :failed]
+    end
+  end
+
+  def passed_query_regex
+    /(?:\*Main|Prelude)> (.*)/
   end
 end
