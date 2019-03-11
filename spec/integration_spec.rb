@@ -52,7 +52,7 @@ HASKELL
     response = bridge.run_query!(extra: "f x = x",
                                  content: "g x = x",
                                  query: 'f 1 + g 2')
-    expect(response).to eq(status: :passed, result: "3\n")
+    expect(response).to eq(status: :passed, result: "3")
   end
 
   it 'answers a valid hash when submission is ok' do
@@ -133,7 +133,7 @@ HASKELL
                                    content: "",
                                    query: "\"#{unicode_string}\"")
 
-      expect(response).to eq(status: :passed, result: "\"#{unicode_string}\"\n")
+      expect(response).to eq(status: :passed, result: "\"#{unicode_string}\"")
     end
 
     it 'works OK with submissions' do

@@ -8,9 +8,4 @@ class HaskellFileHook < Mumukit::Templates::FileHook
   def tempfile_extension
     '.hs'
   end
-
-  def command_line(filename)
-    "runhaskell #{filename}"
-  end
-
 end
