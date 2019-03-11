@@ -38,4 +38,8 @@ main = hspecWith defaultConfig {configFormatter = Just structured} $ do
 #{req.test.lines.map {|it| '    ' + it}.join}
 EOF
   end
+
+  def command_line(filename)
+    "runhaskell #{filename}"
+  end
 end
