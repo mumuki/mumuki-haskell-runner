@@ -18,6 +18,16 @@ describe HaskellQueryHook do
       it { expect(result).to eq ["6", :passed] }
   end
 
+  describe 'should pass on ok request with faulty content' do
+    let(:request) { qreq(' !@#', '2 * 3') }
+    it { expect(result).to eq ["6", :passed] }
+  end
+
+  describe 'should fail on faulty query' do
+    let(:request) { qreq('', 'lenth [1, 2, 3]') }
+    it { expect(result).to eq ["\n<interactive>:2:1:\n    Not in scope: ‘lenth’\n    Perhaps you meant ‘length’ (imported from Data.List)", :failed] }
+  end
+
   describe 'should pass on a query that uses functions from Data.List' do
     let(:request) { qreq(okCode, "nub [1, 1, 2]") }
     it { expect(result).to eq ["[1,2]", :passed] }
