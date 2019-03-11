@@ -15,26 +15,26 @@ describe HaskellQueryHook do
 
   describe 'should pass on ok request' do
     let(:request) { qreq(okCode, okQuery) }
-      it { expect(result).to eq ["6\n", :passed] }
+      it { expect(result).to eq ["6", :passed] }
   end
 
   describe 'should pass on a query that uses functions from Data.List' do
     let(:request) { qreq(okCode, "nub [1, 1, 2]") }
-    it { expect(result).to eq ["[1,2]\n", :passed] }
+    it { expect(result).to eq ["[1,2]", :passed] }
   end
 
   describe 'should have result on ok request with query dependent on extra' do
     let(:request) { qreq(okCodeOnExtra, okQuery, extraCode) }
-    it { expect(result).to eq ["4\n", :passed] }
+    it { expect(result).to eq ["4", :passed] }
   end
   describe 'should pass avoiding show function error' do
     let(:request) { qreq(okCode, okShowFunction) }
-    it { expect(result).to eq ["<function>\n", :passed] }
+    it { expect(result).to eq ["<function>", :passed] }
   end
 
   describe 'should allow consulting a type' do
     let(:request) { qreq('', ':t length') }
-    it { expect(result).to eq ["Foldable t => t a -> Int\n", :passed] }
+    it { expect(result).to eq ["length :: Foldable t => t a -> Int", :passed] }
   end
 end
 
