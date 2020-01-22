@@ -59,7 +59,13 @@ class HaskellTestHook < HaskellFileHook
     HASKELL
   end
 
-  def command_line(filename)
-    "runhaskell #{filename}"
+  def command_line(test_file, _code_file)
+    ['bash', '-c', "cd #{dir_from_file_path test_file} && runhaskell #{test_file}"]
+  end
+
+  private
+
+  def dir_from_file_path(file_path)
+    file_path[/.*\//]
   end
 end
