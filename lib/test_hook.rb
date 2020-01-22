@@ -6,6 +6,10 @@ class HaskellTestHook < HaskellFileHook
     super(result).compact
   end
 
+  def has_files?(_req)
+    true
+  end
+
   def compile_file_content(req)
     {
       'Test.hs' => compile_test_file(req),
