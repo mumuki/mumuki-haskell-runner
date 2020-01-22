@@ -7,36 +7,52 @@ class HaskellTestHook < HaskellFileHook
   end
 
   def compile_file_content(req)
-    <<-EOF
-{-# OPTIONS_GHC -fdefer-type-errors #-}
-import Test.Hspec
-import Test.Hspec.Runner (hspecWith, defaultConfig, Config (configFormatter))
-import Test.QuickCheck
-import Test.Hspec.Formatters
+    {
+      'Test.hs' => compile_test_file(req),
+      'Code.hs' => compile_code_file(req)
+    }
+  end
 
-import qualified Control.Exception as Exception
+  def compile_test_file(req)
+    <<~HASKELL
+      {-# OPTIONS_GHC -fdefer-type-errors #-}
+      import Test.Hspec
+      import Test.Hspec.Runner (hspecWith, defaultConfig, Config (configFormatter))
+      import Test.QuickCheck
+      import Test.Hspec.Formatters
+      import Code
+      
+      import qualified Control.Exception as Exception
+      
+      import Data.List
+      
+      structured :: Formatter
+      structured = silent {
+        exampleSucceeded = \\p ->
+          writeTerm [formatPath p, "passed", ""],
+        exampleFailed    = \\p result -> case result of
+            (Right e) -> writeTerm [formatPath p, "failed", e]
+            (Left e)  -> writeTerm [formatPath p, "failed", show e],
+        headerFormatter  = write $ "@@@RESULTS-START@@@[",
+        footerFormatter  = write $ "null]"
+      }
+        where formatPath (ps, p) = intercalate " " $ (ps ++ [p])
+              writeTerm = write.(++",").show
+      
+      main :: IO ()
+      main = hspecWith defaultConfig {configFormatter = Just structured} $ do
+      #{req.test.lines.map {|it| '    ' + it}.join}
+    HASKELL
+  end
 
-import Data.List
-
-structured :: Formatter
-structured = silent {
-  exampleSucceeded = \\p ->
-    writeTerm [formatPath p, "passed", ""],
-  exampleFailed    = \\p result -> case result of
-      (Right e) -> writeTerm [formatPath p, "failed", e]
-      (Left e)  -> writeTerm [formatPath p, "failed", show e],
-  headerFormatter  = write $ "@@@RESULTS-START@@@[",
-  footerFormatter  = write $ "null]"
-}
-  where formatPath (ps, p) = intercalate " " $ (ps ++ [p])
-        writeTerm = write.(++",").show
-
-#{req.content}
-#{req.extra}
-main :: IO ()
-main = hspecWith defaultConfig {configFormatter = Just structured} $ do
-#{req.test.lines.map {|it| '    ' + it}.join}
-EOF
+  def compile_code_file(req)
+    <<~HASKELL
+      {-# OPTIONS_GHC -fdefer-type-errors #-}
+      module Code where
+      
+      #{req.content}
+      #{req.extra}
+    HASKELL
   end
 
   def command_line(filename)
