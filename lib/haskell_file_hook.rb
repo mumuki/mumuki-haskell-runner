@@ -1,4 +1,4 @@
-class HaskellFileHook < Mumukit::Templates::MultiFileHook
+class HaskellFileHook < Mumukit::Templates::FileHook
   isolated true
 
   def cleanup_raw_result(result)
