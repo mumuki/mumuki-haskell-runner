@@ -44,12 +44,12 @@ describe HaskellExpectationsHook do
   end
 
   context 'v2 expectations' do
-    let(:code) { 'foo = m 3' }
+    let(:code) { 'foo = something 3' }
 
     describe 'Uses' do
       let(:expectations) do
-        [{binding: 'foo', inspection: 'Uses:m'},
-         {binding: 'foo', inspection: 'Uses:g'}]
+        [{binding: 'foo', inspection: 'Uses:something'},
+         {binding: 'foo', inspection: 'Uses:something_else'}]
       end
 
       it { expect(result).to eq([
